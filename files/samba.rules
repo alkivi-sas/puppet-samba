@@ -1,0 +1,6 @@
+*filter
+-A INPUT -p udp --dport 137 -j ACCEPT -m comment --comment "samba"
+-A INPUT -p udp --dport 138 -j ACCEPT -m comment --comment "samba"
+-A INPUT -p tcp -m state --state NEW --dport 139 -j ACCEPT -m comment --comment "samba"
+-A INPUT -p tcp -m state --state NEW --dport 445 -j ACCEPT -m comment --comment "samba"
+COMMIT

@@ -1,0 +1,76 @@
+[global]
+    # General info
+    workgroup = <%= @workgroup %>
+    netbios name = <%= @netbios_name %>
+    server string = <%= @server_string %>
+  <% if @interfaces.size > 0 %>
+    interfaces = <%= @interfaces.join(' ') %>
+  <% end %>
+  <% if @hosts_allow.size > 0 %>
+    hosts allow = <%= @hosts_allow.join(' ') %>
+  <% end %>
+
+    deadtime = 10
+
+    # Log related
+    log level = <%= @log_level %>
+    log file = <%= @log_file %>
+    max log size = <%= @max_log_size %>
+    debug pid = <%= @debug_pid %>
+    debug uid = <%= @debug_uid %>
+    syslog = <%= @syslog %>
+
+    # Printing related
+    printing = <%= @printing %>
+    printcap name = <%= @printcap_name %>
+
+    security = <%= @security %>
+    os level = <%= @os_level %>
+
+    # What is that ?
+    logon path =
+    logon home =
+    logon drive =
+    logon script =
+
+    obey pam restrictions = <%= @obey_pam_restrictions %>
+
+    utmp = <%= @utmp %>
+
+    <% if @ldap %>
+    # LDAP related
+    domain logons = yes
+    domain master = Yes
+    passdb backend = ldapsam:<%= @ldap_uri %>
+    ldap ssl = <%= @ldap_ssl %>
+
+    ldap admin dn = <%= @ldap_admin_dn %>
+    ldap delete dn = <%= @ldap_delete_dn %>
+    ldap password sync = <%= @ldap_password_sync %>
+    ldap suffix = <%= @ldap_suffix %>
+    ldap user suffix = <%= @ldap_user_suffix %>
+    ldap group suffix = <%= @ldap_group_suffix %>
+    ldap machine suffix = <%= @ldap_machine_suffix %>
+    ldap idmap suffix = <%= @ldap_idmap_suffix %>
+
+    passwd program = /usr/sbin/smbldap-passwd -u '%u'
+    passwd chat = "Changing *\nNew password*" %n\n "*Retype new password*" %n\n"
+
+    add user script = /usr/sbin/smbldap-useradd -m '%u' -t 1
+    rename user script = /usr/sbin/smbldap-usermod -r '%unew' '%uold'
+    delete user script = /usr/sbin/smbldap-userdel '%u'
+    set primary group script = /usr/sbin/smbldap-usermod -g '%g' '%u'
+    add group script = /usr/sbin/smbldap-groupadd -p '%g'
+    delete group script = /usr/sbin/smbldap-groupdel '%g'
+    add user to group script = /usr/sbin/smbldap-groupmod -m '%u' '%g'
+    delete user from group script = /usr/sbin/smbldap-groupmod -x '%u' '%g'
+    add machine script = /usr/sbin/smbldap-useradd -w '%u' -t 1
+    <% end %>
+
+
+# Shares
+<% @shares.sort_by {|name, options| name}.each do |name,options| %>
+[<%= name %>]
+<% options.each do |key, value| %>  <%= key %> = <%= value %>
+<% end %>
+<% end %>
