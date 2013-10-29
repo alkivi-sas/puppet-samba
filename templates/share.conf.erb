@@ -1,0 +1,6 @@
+# 
+# Share handle via puppet : <%= @name %>
+# 
+[<%= @name %>]
+<% @options.each do |key, value| %>  <%= key %> = <%= value %>
+<% end %>

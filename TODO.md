@@ -1,2 +1,1 @@
-* remove shares hash from init declaration and make it ressource
-* use concat to manage shares
+* add more parameter for ldap and share ?

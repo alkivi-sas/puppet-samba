@@ -12,30 +12,30 @@ class { 'samba':
   workgroup     => 'TEST',
   netbios_name  => 'TEST',
   server_strina => 'Awesome Test FileServer',
-  ldap          => false,
-  shares        => { 
-    'homes' =>  { 
+}
+```
+This will do the typical install, configure and service management.
+
+### Declaring one share
+
+```puppet
+samba::share { 'homes': 
+  options => { 
     'comment'        => 'Home Directories' ,
     'browseable'     => 'no' ,
     'read only'      => 'yes',
     'create mask'    => '0700',
     'directory mask' => '0700',
     'valid users'    => '%S',
-    },
   },
 }
-```
-This will do the typical install, configure and service management.
 
+So far, options key names are not checked, maybe in the futur ...
 
-### More server configuration, with ldap
+### Add ldap info to samba
 
 ```puppet
-class { 'samba':
-  workgroup           => 'TEST',
-  netbios_name        => 'TEST',
-  server_strina       => 'Awesome Test FileServer',
-  ldap                => true,
+class { 'samba::ldap':
   ldap_uri            => 'ldap://localhost',
   ldap_ssl            => 'no',
   ldap_delete_dn      => 'no',
@@ -48,6 +48,8 @@ class { 'samba':
   ldap_idmap_suffix   => 'ou=idmap',
 }
 ```
+
+This add a fragment to smb.conf to handle ldap mapping ... a lot of parameter are still static thought
 
 ## Limitations
 
