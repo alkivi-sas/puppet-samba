@@ -28,4 +28,6 @@ class samba::ldap(
     content => template('samba/ldap.conf.erb'),
     order   => 01,
   }
+
+  # TODO : smbpasswd -W to fix admin ldap password in secrets.tdb
 }
