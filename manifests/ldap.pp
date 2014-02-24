@@ -18,10 +18,18 @@ class samba::ldap(
   validate_string($ldap_group_suffix)
   validate_string($ldap_machine_suffix)
   validate_string($ldap_idmap_suffix)
-  validate_string($ldap_uri)
   validate_string($ldap_ssl)
   validate_string($ldap_delete_dn)
   validate_string($ldap_password_sync)
+
+  if(is_array($ldap_uri))
+  {
+    $real_ldap_uri = join($ldap_uri, ' ')
+  }
+  else
+  {
+    $real_ldap_uri = $ldap_uri
+  }
 
   concat::fragment { 'smb_ldap':
     target  => $samba::params::samba_service_config,

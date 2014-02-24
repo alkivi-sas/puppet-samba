@@ -24,7 +24,7 @@ class samba::config () {
     content => template('samba/etc_default.erb'),
   }
 
-  if($firewall)
+  if($samba::firewall)
   {
     file { '/etc/iptables.d/40-samba.rules':
       source  => 'puppet:///modules/samba/samba.rules',
