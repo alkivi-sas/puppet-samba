@@ -1,4 +1,10 @@
-class samba::config () {
+class samba::config (
+  $workgroup = $samba::workgroup,
+  $server_string = $samba::server_string,
+  $interfaces = $samba::interfaces,
+  $hosts_allow = $samba::hosts_allow,
+  $shares = $samba::shares,
+) {
   File {
     ensure  => present,
     owner   => 'root',
